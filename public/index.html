@@ -88,103 +88,83 @@
 
             <!-- MODAL UNIFICADO -->
             <div id="reviewModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(6px)">
-                <div style="background:#141414;border-radius:18px;width:94%;max-width:560px;max-height:94vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+                <div class="modal-content" style="background: #141414; width: 100%; max-width: 600px; max-height: 90vh; border-radius: 24px; overflow-y: auto; position: relative; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+                    <button id="closeModal" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--muted-foreground); transition: 0.2s;">×</button>
+                    <h2 style="font-family: 'Libre Caslon Text', serif; font-size: 2rem; margin-bottom: 8px;">Nova Avaliação</h2>
+                    <p style="color: var(--muted-foreground); margin-bottom: 32px;">Compartilhe sua experiência e ajude outros usuários.</p>
 
-                    <!-- Header -->
-                    <div style="padding:24px 28px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #333;position:sticky;top:0;background:#141414;z-index:2;border-radius:18px 18px 0 0">
-                        <div>
-                            <h2 style="font-family:'Poppins',sans-serif;font-size:1.2rem;margin:0;color:#FFFFFF">📝 Avaliar um Local</h2>
-                            <p style="margin:4px 0 0;font-size:.82rem;color:#A1A1AA">Cadastre o local e deixe sua avaliação</p>
-                        </div>
-                        <button id="closeModal" style="background:none;border:none;font-size:1.7rem;cursor:pointer;color:#A1A1AA;line-height:1">&times;</button>
-                    </div>
-
-                    <!-- FORMULÁRIO ÚNICO -->
-                    <form id="unifiedForm" enctype="multipart/form-data" style="padding:24px 28px">
-
-                        <!-- SEÇÃO 1: DADOS DO LOCAL -->
-                        <p class="section-label">📍 Dados do estabelecimento</p>
-
-                        <div style="margin-bottom:16px">
-                            <label class="modal-label">Nome do lugar *</label>
-                            <input type="text" id="uPlaceName" class="modal-input" placeholder="Ex: Marmitaria da Dona Maria" required>
-                        </div>
-
-                        <div style="margin-bottom:16px">
-                            <label class="modal-label">Categoria *</label>
-                            <select id="uCategory" class="modal-input" required>
-                                <option value="" disabled selected>Selecione uma categoria</option>
-                                <option value="marmitaria">🍱 Marmitaria</option>
-                                <option value="restaurant">🍽️ Restaurante</option>
-                                <option value="snack">🍔 Lanchonete</option>
-                                <option value="pastelaria">🥟 Pastelaria</option>
-                            </select>
-                        </div>
-
-                        <div style="margin-bottom:16px">
-                            <label class="modal-label">Tipo de experiência</label>
-                            <div style="display:flex;flex-wrap:wrap;gap:8px">
-                                <label class="exp-pill"><input type="checkbox" name="exp" value="Marmita do dia"> 🍱 Marmita do dia</label>
-                                <label class="exp-pill"><input type="checkbox" name="exp" value="Self-service"> 🍛 Self-service</label>
-                                <label class="exp-pill"><input type="checkbox" name="exp" value="Lanche rápido"> 🍔 Lanche rápido</label>
-                                <label class="exp-pill"><input type="checkbox" name="exp" value="Pastelaria"> 🥟 Pastelaria</label>
-                                <label class="exp-pill"><input type="checkbox" name="exp" value="Delivery"> 🛵 Delivery</label>
-                                <label class="exp-pill"><input type="checkbox" name="exp" value="Comer no local"> 🪑 Comer no local</label>
+                    <form id="unifiedForm">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                            <div>
+                                <label class="form-label" style="display: block; font-weight: 600; margin-bottom: 8px;">Nome do Lugar *</label>
+                                <input type="text" id="uPlaceName" class="form-control" placeholder="Ex: Marmitaria da Maria" required="" style="width:100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px;">
+                            </div>
+                            <div>
+                                <label class="form-label" style="display: block; font-weight: 600; margin-bottom: 8px;">Categoria *</label>
+                                <select id="uCategory" class="form-control" required="" style="width:100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px;">
+                                    <option value="marmitaria">Marmitaria</option>
+                                    <option value="restaurant">Restaurante</option>
+                                    <option value="snack">Lanchonete</option>
+                                    <option value="pastelaria">Pastelaria</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div style="margin-bottom:16px">
-                            <label class="modal-label">Endereço</label>
-                            <input type="text" id="uAddress" class="modal-input" placeholder="Ex: Rua das Flores, 123 - Centro">
+                        <div style="margin-bottom: 24px;">
+                            <label class="form-label" style="display: block; font-weight: 600; margin-bottom: 8px;">Endereço (Opcional)</label>
+                            <input type="text" id="uAddress" class="form-control" placeholder="Rua, Número, Bairro - Cidade" style="width:100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px;">
                         </div>
 
-                        <!-- DIVISOR -->
-                        <hr class="section-divider">
-                        <p class="section-label">⭐ Sua avaliação</p>
-
-                        <div style="margin-bottom:20px">
-                            <label class="modal-label">Nota Geral *</label>
-                            <div class="star-rating" id="uStarRating">
-                                <span class="star-btn" data-val="1">&#9733;</span>
-                                <span class="star-btn" data-val="2">&#9733;</span>
-                                <span class="star-btn" data-val="3">&#9733;</span>
-                                <span class="star-btn" data-val="4">&#9733;</span>
-                                <span class="star-btn" data-val="5">&#9733;</span>
-                                <span id="uStarLabel" style="margin-left:10px;font-size:.9rem;color:var(--muted-foreground)">Clique para avaliar</span>
+                        <div style="margin-bottom: 32px;">
+                            <label class="form-label" style="display: block; font-weight: 600; margin-bottom: 12px;">Experiência / Serviços</label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer;"><input type="checkbox" name="exp" value="Marmita"> Marmita</label>
+                                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer;"><input type="checkbox" name="exp" value="Self-service"> Self-service</label>
+                                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer;"><input type="checkbox" name="exp" value="Lanche rápido"> Lanche rápido</label>
+                                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer;"><input type="checkbox" name="exp" value="Pastelaria"> Pastelaria</label>
+                                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer;"><input type="checkbox" name="exp" value="Delivery"> Delivery</label>
+                                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer;"><input type="checkbox" name="exp" value="Comer no local"> Comer no local</label>
                             </div>
-                            <input type="hidden" id="uRating" required>
                         </div>
 
-                        <div style="margin-bottom:16px">
-                            <label class="modal-label">Recomenda este local? *</label>
-                            <div class="recommend-row">
-                                <button type="button" class="rec-btn yes" id="uRecYes">👍 Sim</button>
-                                <button type="button" class="rec-btn no" id="uRecNo">👎 Não</button>
+                        <div style="background: rgba(230,126,34,0.03); padding: 24px; border-radius: 16px; border: 1px dashed var(--primary); margin-bottom: 32px;">
+                            <div style="margin-bottom: 20px; text-align: center;">
+                                <label style="display: block; font-weight: 700; margin-bottom: 12px; font-size: 1.1rem;">Sua Nota Geral *</label>
+                                <div class="star-rating" id="uStarRating" style="font-size: 2.5rem; color: #ddd; display: flex; justify-content: center; gap: 8px; cursor: pointer;">
+                                    <span class="star-btn" data-val="1">★</span>
+                                    <span class="star-btn" data-val="2">★</span>
+                                    <span class="star-btn" data-val="3">★</span>
+                                    <span class="star-btn" data-val="4">★</span>
+                                    <span class="star-btn" data-val="5">★</span>
+                                </div>
+                                <div id="uStarLabel" style="margin-top: 8px; font-weight: 600; color: var(--primary);">Clique para avaliar</div>
+                                <input type="hidden" id="uRating" required="">
                             </div>
-                            <input type="hidden" id="uRecommend" value="1">
+
+                            <div style="margin-bottom: 0;">
+                                <label style="display: block; font-weight: 600; margin-bottom: 12px; text-align: center;">Recomenda este lugar? *</label>
+                                <div style="display: flex; gap: 16px;">
+                                    <button type="button" id="uRecYes" class="rec-btn active" style="flex: 1; padding: 12px; border-radius: 12px; border: 2px solid var(--border); background: white; font-weight: 700; cursor: pointer; transition: 0.2s;">👍 Sim</button>
+                                    <button type="button" id="uRecNo" class="rec-btn" style="flex: 1; padding: 12px; border-radius: 12px; border: 2px solid var(--border); background: white; font-weight: 700; cursor: pointer; transition: 0.2s;">👎 Não</button>
+                                </div>
+                                <input type="hidden" id="uRecommend" value="1">
+                            </div>
                         </div>
 
-                        <div style="margin-bottom:16px">
-                            <label class="modal-label">Comentário</label>
-                            <textarea id="uComment" rows="3" class="modal-input" placeholder="Conte sua experiência com detalhes..."></textarea>
+                        <div style="margin-bottom: 24px;">
+                            <label class="form-label" style="display: block; font-weight: 600; margin-bottom: 8px;">Comentários (Opcional)</label>
+                            <textarea id="uComment" rows="4" class="form-control" placeholder="Conte mais sobre a comida, preço e atendimento..." style="width:100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; resize: none;"></textarea>
                         </div>
 
-                        <div style="margin-bottom:24px">
-                            <label class="modal-label">Fotos (opcional, máx. 3)</label>
-                            <label for="uPhotos" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:.2s" id="photoDropZone">
-                                <span style="font-size:2rem">📷</span>
-                                <span style="font-size:.9rem;color:var(--muted-foreground)">Clique para adicionar fotos</span>
-                                <span style="font-size:.75rem;color:var(--muted-foreground)">JPG, PNG • máx. 5MB cada</span>
-                            </label>
-                            <input type="file" id="uPhotos" name="photos" multiple accept="image/*" style="display:none">
-                            <div id="uPhotoPreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
+                        <div style="margin-bottom: 32px;">
+                            <label class="form-label" style="display: block; font-weight: 600; margin-bottom: 8px;">Fotos (Opcional - Máx 3)</label>
+                            <input type="file" id="uPhotos" multiple="" accept="image/*" style="display: block; margin-bottom: 12px;">
+                            <div id="uPhotoPreview" style="display: flex; gap: 10px;"></div>
                         </div>
 
-                        <div id="uErrorMsg" style="display:none;background:#fce8e6;color:#c5221f;padding:12px 16px;border-radius:8px;font-size:.88rem;margin-bottom:16px"></div>
+                        <div id="uErrorMsg" style="display: none; background: #fee2e2; color: #b91c1c; padding: 12px; border-radius: 8px; margin-bottom: 24px; font-size: 0.9rem; text-align: center; border: 1px solid #f87171;"></div>
 
-                        <button type="submit" class="btn btn-primary" id="uSubmitBtn" style="width:100%;padding:15px;font-size:1.05rem;border-radius:10px;font-weight:700">
-                            ✅ Publicar Avaliação
-                        </button>
+                        <button type="submit" id="uSubmitBtn" class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 1.1rem; font-weight: 800; border-radius: 12px; box-shadow: 0 10px 25px rgba(230,126,34,0.3);">Publicar Avaliação</button>
                     </form>
                 </div>
             </div>
