@@ -1,0 +1,65 @@
+/* Custom Background and Contrast Adjustments */
+
+.hero-banner {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    background: url('../uploads/Background_site.png') no-repeat center center !important;
+    background-size: cover !important;
+    padding: 100px 16px !important;
+    color: white !important;
+    border-bottom: none !important;
+}
+
+@media(min-width: 768px) {
+    .hero-banner {
+        padding: 140px 20px !important;
+    }
+}
+
+/* Dark overlay to make text pop */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 1;
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    color: white !important;
+    text-shadow: 0 2px 15px rgba(0,0,0,0.5) !important;
+    font-weight: 800 !important;
+}
+
+.hero-subtitle {
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4) !important;
+    font-weight: 500 !important;
+}
+
+/* Premium Search Bar Adjustment */
+.hero-banner .search-input {
+    background-color: white !important;
+    color: #222 !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+    height: 60px !important;
+    font-size: 1.1rem !important;
+}
+
+.hero-banner .search-icon svg {
+    color: var(--primary) !important;
+}
+
+/* Hide blobs if they interfere with the background image */
+.hero-blob {
+    display: none !important;
+}

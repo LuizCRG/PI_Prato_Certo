@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prato Honesto - Coma bem, sem cair em cilada</title>
+    <meta name="description" content="Encontre marmitas, restaurantes e lanchonetes bem avaliados perto de você. Avaliações reais e transparência total.">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/custom_background.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .modal-label { display:block; margin-bottom:8px; font-weight:600; font-size:.88rem; color:var(--foreground); }
+        .modal-input { width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:10px; background:var(--background); color:var(--foreground); font-family:inherit; font-size:.93rem; transition:border-color .2s; box-sizing:border-box; }
+        .modal-input:focus { border-color:var(--primary); outline:none; box-shadow:0 0 0 3px rgba(230,126,34,.15); }
+        .modal-tab { padding:14px 20px; border:none; background:none; font-family:'Poppins',sans-serif; font-size:.9rem; font-weight:500; cursor:pointer; color:var(--muted-foreground); border-bottom:2px solid transparent; transition:.2s; }
+        .modal-tab.active { color:var(--primary); border-bottom-color:var(--primary); }
+        .star-rating { display:flex; align-items:center; gap:4px; }
+        .star-btn { font-size:2rem; cursor:pointer; color:#ddd; transition:color .15s; line-height:1; }
+        .star-btn.selected, .star-btn.hovered { color:#f59e0b; }
+        .exp-pill { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1.5px solid var(--border); border-radius:100px; cursor:pointer; font-size:.85rem; transition:.2s; user-select:none; }
+        .exp-pill:has(input:checked) { border-color:var(--primary); background:rgba(230,126,34,.08); color:var(--primary); font-weight:600; }
+        .exp-pill input { display:none; }
+        .photo-thumb { width:80px; height:80px; object-fit:cover; border-radius:8px; }
+        .recommend-row { display:flex; gap:12px; }
+        .rec-btn { flex:1; padding:12px; border:1.5px solid var(--border); border-radius:10px; background:none; font-family:inherit; font-size:.95rem; font-weight:600; cursor:pointer; transition:.2s; }
+        .rec-btn.yes.active { border-color:#1e8e3e; background:rgba(30,142,62,.07); color:#1e8e3e; }
+        .rec-btn.no.active { border-color:var(--destructive); background:rgba(220,53,69,.07); color:var(--destructive); }
+        .section-divider { border:none; border-top:2px dashed var(--border); margin:24px 0; }
+        .section-label { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted-foreground); margin-bottom:16px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                🍽️ <span>Prato Honesto</span>
+                <span class="logo-slogan">coma bem, sem cair em cilada</span>
+            </a>
+            <div class="header-nav" id="headerNav">
+                <a href="rankings.html" class="btn btn-outline">🏆 Rankings</a>
+                <a href="login.html" class="btn btn-primary">Entrar</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero-banner">
+            <div class="hero-overlay"></div>
+            <div class="container hero-inner">
+                <div class="hero-content">
+                    <h1 class="hero-title"><span class="hero-emoji">🍽️</span><br>Prato Honesto</h1>
+                    <p class="hero-subtitle">Coma bem, sem cair em cilada — encontre lugares bem avaliados perto de você</p>
+                    <div class="search-container">
+                        <span class="search-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                        </span>
+                        <input type="text" id="heroSearchInput" class="search-input" placeholder="Buscar por nome ou tipo de comida...">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILTROS -->
+        <section class="container" style="margin-top:24px">
+            <div class="filters">
+                <button class="filter-chip filter-priority" data-filter="rating">⭐ Mais avaliados</button>
+                <button class="filter-chip filter-priority" data-filter="cheap">💰 Mais baratos</button>
+                <button class="filter-chip filter-all active" data-filter="">Todos</button>
+                <div class="filter-categories">
+                    <button class="filter-chip" data-filter-cat="marmitaria">🍱 Marmitaria</button>
+                    <button class="filter-chip" data-filter-cat="restaurant">🍽️ Restaurante</button>
+                    <button class="filter-chip" data-filter-cat="snack">🍔 Lanchonete</button>
+                    <button class="filter-chip" data-filter-cat="pastelaria">🥟 Pastelaria</button>
+                </div>
+            </div>
+
+            <div class="places-grid" id="placesGrid">
+                <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted-foreground)">Carregando os melhores pratos da região...</div>
+            </div>
+
+            <!-- FAB -->
+            <button id="fabReview" class="btn btn-primary" style="position:fixed;bottom:30px;right:30px;padding:16px 24px;border-radius:100px;box-shadow:0 4px 20px rgba(230,126,34,0.4);z-index:100;font-size:1.05rem;display:none;gap:8px;align-items:center">
+                ⭐ Avaliar / Cadastrar Local
+            </button>
+
+            <!-- MODAL UNIFICADO -->
+            <div id="reviewModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(6px)">
+                <div style="background:var(--card);border-radius:18px;width:94%;max-width:560px;max-height:94vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+
+                    <!-- Header -->
+                    <div style="padding:24px 28px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card);z-index:2;border-radius:18px 18px 0 0">
+                        <div>
+                            <h2 style="font-family:'Poppins',sans-serif;font-size:1.2rem;margin:0">📝 Avaliar um Local</h2>
+                            <p style="margin:4px 0 0;font-size:.82rem;color:var(--muted-foreground)">Cadastre o local e deixe sua avaliação</p>
+                        </div>
+                        <button id="closeModal" style="background:none;border:none;font-size:1.7rem;cursor:pointer;color:var(--muted-foreground);line-height:1">&times;</button>
+                    </div>
+
+                    <!-- FORMULÁRIO ÚNICO -->
+                    <form id="unifiedForm" enctype="multipart/form-data" style="padding:24px 28px">
+
+                        <!-- SEÇÃO 1: DADOS DO LOCAL -->
+                        <p class="section-label">📍 Dados do estabelecimento</p>
+
+                        <div style="margin-bottom:16px">
+                            <label class="modal-label">Nome do lugar *</label>
+                            <input type="text" id="uPlaceName" class="modal-input" placeholder="Ex: Marmitaria da Dona Maria" required>
+                        </div>
+
+                        <div style="margin-bottom:16px">
+                            <label class="modal-label">Categoria *</label>
+                            <select id="uCategory" class="modal-input" required>
+                                <option value="" disabled selected>Selecione uma categoria</option>
+                                <option value="marmitaria">🍱 Marmitaria</option>
+                                <option value="restaurant">🍽️ Restaurante</option>
+                                <option value="snack">🍔 Lanchonete</option>
+                                <option value="pastelaria">🥟 Pastelaria</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom:16px">
+                            <label class="modal-label">Tipo de experiência</label>
+                            <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                <label class="exp-pill"><input type="checkbox" name="exp" value="Marmita do dia"> 🍱 Marmita do dia</label>
+                                <label class="exp-pill"><input type="checkbox" name="exp" value="Self-service"> 🍛 Self-service</label>
+                                <label class="exp-pill"><input type="checkbox" name="exp" value="Lanche rápido"> 🍔 Lanche rápido</label>
+                                <label class="exp-pill"><input type="checkbox" name="exp" value="Pastelaria"> 🥟 Pastelaria</label>
+                                <label class="exp-pill"><input type="checkbox" name="exp" value="Delivery"> 🛵 Delivery</label>
+                                <label class="exp-pill"><input type="checkbox" name="exp" value="Comer no local"> 🪑 Comer no local</label>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:16px">
+                            <label class="modal-label">Endereço</label>
+                            <input type="text" id="uAddress" class="modal-input" placeholder="Ex: Rua das Flores, 123 - Centro">
+                        </div>
+
+                        <!-- DIVISOR -->
+                        <hr class="section-divider">
+                        <p class="section-label">⭐ Sua avaliação</p>
+
+                        <div style="margin-bottom:20px">
+                            <label class="modal-label">Nota Geral *</label>
+                            <div class="star-rating" id="uStarRating">
+                                <span class="star-btn" data-val="1">&#9733;</span>
+                                <span class="star-btn" data-val="2">&#9733;</span>
+                                <span class="star-btn" data-val="3">&#9733;</span>
+                                <span class="star-btn" data-val="4">&#9733;</span>
+                                <span class="star-btn" data-val="5">&#9733;</span>
+                                <span id="uStarLabel" style="margin-left:10px;font-size:.9rem;color:var(--muted-foreground)">Clique para avaliar</span>
+                            </div>
+                            <input type="hidden" id="uRating" required>
+                        </div>
+
+                        <div style="margin-bottom:16px">
+                            <label class="modal-label">Recomenda este local? *</label>
+                            <div class="recommend-row">
+                                <button type="button" class="rec-btn yes" id="uRecYes">👍 Sim</button>
+                                <button type="button" class="rec-btn no" id="uRecNo">👎 Não</button>
+                            </div>
+                            <input type="hidden" id="uRecommend" value="1">
+                        </div>
+
+                        <div style="margin-bottom:16px">
+                            <label class="modal-label">Comentário</label>
+                            <textarea id="uComment" rows="3" class="modal-input" placeholder="Conte sua experiência com detalhes..."></textarea>
+                        </div>
+
+                        <div style="margin-bottom:24px">
+                            <label class="modal-label">Fotos (opcional, máx. 3)</label>
+                            <label for="uPhotos" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:.2s" id="photoDropZone">
+                                <span style="font-size:2rem">📷</span>
+                                <span style="font-size:.9rem;color:var(--muted-foreground)">Clique para adicionar fotos</span>
+                                <span style="font-size:.75rem;color:var(--muted-foreground)">JPG, PNG • máx. 5MB cada</span>
+                            </label>
+                            <input type="file" id="uPhotos" name="photos" multiple accept="image/*" style="display:none">
+                            <div id="uPhotoPreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
+                        </div>
+
+                        <div id="uErrorMsg" style="display:none;background:#fce8e6;color:#c5221f;padding:12px 16px;border-radius:8px;font-size:.88rem;margin-bottom:16px"></div>
+
+                        <button type="submit" class="btn btn-primary" id="uSubmitBtn" style="width:100%;padding:15px;font-size:1.05rem;border-radius:10px;font-weight:700">
+                            ✅ Publicar Avaliação
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- DESTAQUES -->
+        <section class="container" style="padding-bottom:60px">
+            <div id="highlightsSection"></div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/supabase-client.js"></script>
+    <script src="./js/app.js"></script>
+    <script>
+        document.getElementById('heroSearchInput').addEventListener('input', function() {
+            const mainInput = document.getElementById('mainSearch');
+            if (mainInput) { mainInput.value = this.value; mainInput.dispatchEvent(new Event('input')); }
+        });
+    </script>
+</body>
+</html>

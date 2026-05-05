@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rankings - Prato Honesto</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">🍽️ Prato Honesto</a>
+            <div class="header-nav">
+                <a href="login.html" class="btn btn-primary">Entrar</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 40px; padding-bottom: 100px;">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <div style="display: inline-block; padding: 8px 16px; background: rgba(230,126,34,0.1); color: var(--primary); border-radius: 100px; font-weight: bold; font-size: 0.85rem; margin-bottom: 16px;">🏆 OS MELHORES DA CIDADE</div>
+            <h1 style="font-size: 2.5rem; margin-bottom: 12px; font-family: 'Libre Caslon Text', serif;">Rankings Prato Honesto</h1>
+            <p style="color: var(--muted-foreground); font-size: 1.1rem;">Baseado na opinião real de quem frequenta</p>
+        </div>
+
+        <div id="rankingsContainer" style="display: grid; gap: 40px; grid-template-columns: 1fr;">
+            <!-- Conteúdo carregado via JS -->
+            <div class="loading-placeholder">Calculando as melhores notas...</div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/supabase-client.js"></script>
+    <script src="./js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/rankings')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('rankingsContainer');
+                let html = '';
+
+                // Seção Top Geral
+                html += renderRankingSection('⭐ Top 5 Geral', data.general);
+
+                // Seções por Categoria
+                const catInfo = {
+                    marmitaria: { title: '🍱 Melhores Marmitarias', icon: '🍱' },
+                    restaurant: { title: '🍽️ Melhores Restaurantes', icon: '🍽️' },
+                    snack: { title: '🍔 Top Lanchonetes', icon: '🍔' },
+                    pastelaria: { title: '🥟 Pastelarias Favoritas', icon: '🥟' }
+                };
+
+                for (const cat in data.byCategory) {
+                    if (data.byCategory[cat].length > 0) {
+                        html += renderRankingSection(catInfo[cat].title, data.byCategory[cat]);
+                    }
+                }
+
+                container.innerHTML = html;
+            });
+
+            function renderRankingSection(title, places) {
+                return `
+                    <div class="ranking-card" style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                        <h2 style="font-family: 'Poppins', sans-serif; margin-bottom: 24px; font-size: 1.5rem; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 4px;">${title}</h2>
+                        <div style="display: grid; gap: 8px;">
+                            ${places.map((p, index) => `
+                                <a href="place.html?id=${p.id}" class="ranking-item" style="display: flex; align-items: center; gap: 20px; padding: 16px; border-radius: 12px; transition: 0.2s; text-decoration: none; color: inherit;">
+                                    <div style="font-size: 1.25rem; font-weight: 800; color: ${index === 0 ? 'var(--primary)' : 'var(--muted-foreground)'}; min-width: 40px; font-family: 'Poppins', sans-serif;">${index + 1}º</div>
+                                    <div style="width: 50px; height: 50px; border-radius: 8px; overflow: hidden; background: var(--border); flex-shrink: 0;">
+                                        ${p.photo_url ? `<img src="${p.photo_url}" style="width:100%; height:100%; object-fit:cover;">` : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:1.5rem;">${getCategoryEmoji(p.category)}</div>`}
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h4 style="font-size: 1.1rem; margin: 0; font-weight: 700;">${p.name}</h4>
+                                        <span style="color: var(--muted-foreground); font-size: 0.85rem;">${getCategoryName(p.category)} • ${p.price_range}</span>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-weight: 800; font-size: 1.25rem; color: var(--accent-foreground); display: flex; align-items: center; gap: 4px; justify-content: flex-end;">
+                                            ${parseFloat(p.average_rating).toFixed(1)} <span style="font-size: 1rem;">⭐</span>
+                                        </div>
+                                        <div style="color: var(--muted-foreground); font-size: 0.8rem;">${p.total_reviews} av.</div>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+        });
+
+        // CSS inline temporário para o hover do ranking
+        const style = document.createElement('style');
+        style.innerHTML = '.ranking-item:hover { background: rgba(230,126,34,0.08) !important; transform: translateX(8px); }';
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

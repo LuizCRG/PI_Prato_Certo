@@ -1,0 +1,145 @@
+/* --- Dashboard & Profile Updates --- */
+
+.photo-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.photo-thumb:hover {
+    transform: scale(1.05);
+}
+
+.dash-tab.active {
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: 700;
+}
+
+#userSuggestionsList tr {
+    transition: background-color 0.2s;
+}
+
+#userSuggestionsList tr:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+
+.rec-btn.active {
+    border-color: var(--primary) !important;
+    background: rgba(230,126,34,0.07) !important;
+    color: var(--primary) !important;
+}
+
+#uStarRating .star-btn.selected {
+    color: var(--primary);
+}
+
+/* Empty State Styling */
+.empty-state-container {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(0,0,0,0.02);
+    border-radius: 20px;
+    border: 2px dashed var(--border);
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+/* Suggestions History Table */
+.suggestions-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.suggestions-table th {
+    background: rgba(0,0,0,0.02);
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.suggestions-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.status-badge.approved { background: #e6f4ea; color: #1e8e3e; }
+.status-badge.pending { background: #fff4e5; color: #b45309; }
+.status-badge.rejected { background: #fce8e6; color: #c5221f; }
+
+/* --- Profile Dark Theme --- */
+.profile-card {
+    background-color: #1F1F1F !important;
+    color: #FFFFFF !important;
+    border: 1px solid #333 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+}
+
+.profile-card h3 {
+    color: #FFFFFF !important;
+}
+
+.dash-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #FFFFFF !important;
+}
+
+.dash-input {
+    background-color: #141414 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #444 !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.dash-input:focus {
+    border-color: var(--primary) !important;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(230,126,34,0.2);
+}
+
+.dash-input:disabled {
+    background-color: #262626 !important;
+    color: #AAAAAA !important;
+    border: 1px solid #333 !important;
+    cursor: not-allowed;
+}
+
+.avatar-upload-section {
+    background-color: rgba(255,255,255,0.03) !important;
+    border: 1px solid #333;
+}
+
+.avatar-btn {
+    color: #FFFFFF !important;
+    border-color: #555 !important;
+}
+
+.avatar-btn:hover {
+    background-color: rgba(255,255,255,0.05) !important;
+    border-color: #FFFFFF !important;
+}
+
+.avatar-info {
+    color: #AAAAAA !important;
+}
