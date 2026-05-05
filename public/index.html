@@ -11,24 +11,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        .modal-label { display:block; margin-bottom:8px; font-weight:600; font-size:.88rem; color:var(--foreground); }
-        .modal-input { width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:10px; background:var(--background); color:var(--foreground); font-family:inherit; font-size:.93rem; transition:border-color .2s; box-sizing:border-box; }
+        .modal-label { display:block; margin-bottom:8px; font-weight:600; font-size:.88rem; color:#FFFFFF; }
+        .modal-input { width:100%; padding:12px 14px; border:1.5px solid #333; border-radius:10px; background:#141414; color:#FFFFFF; font-family:inherit; font-size:.93rem; transition:border-color .2s; box-sizing:border-box; }
         .modal-input:focus { border-color:var(--primary); outline:none; box-shadow:0 0 0 3px rgba(230,126,34,.15); }
-        .modal-tab { padding:14px 20px; border:none; background:none; font-family:'Poppins',sans-serif; font-size:.9rem; font-weight:500; cursor:pointer; color:var(--muted-foreground); border-bottom:2px solid transparent; transition:.2s; }
+        .modal-tab { padding:14px 20px; border:none; background:none; font-family:'Poppins',sans-serif; font-size:.9rem; font-weight:500; cursor:pointer; color:#A1A1AA; border-bottom:2px solid transparent; transition:.2s; }
         .modal-tab.active { color:var(--primary); border-bottom-color:var(--primary); }
         .star-rating { display:flex; align-items:center; gap:4px; }
-        .star-btn { font-size:2rem; cursor:pointer; color:#ddd; transition:color .15s; line-height:1; }
+        .star-btn { font-size:2rem; cursor:pointer; color:#555; transition:color .15s; line-height:1; }
         .star-btn.selected, .star-btn.hovered { color:#f59e0b; }
-        .exp-pill { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1.5px solid var(--border); border-radius:100px; cursor:pointer; font-size:.85rem; transition:.2s; user-select:none; }
-        .exp-pill:has(input:checked) { border-color:var(--primary); background:rgba(230,126,34,.08); color:var(--primary); font-weight:600; }
+        .exp-pill { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1.5px solid #333; border-radius:100px; cursor:pointer; font-size:.85rem; transition:.2s; user-select:none; color:#FFFFFF; background:#141414; }
+        .exp-pill:has(input:checked) { border-color:var(--primary); background:rgba(230,126,34,.15); color:var(--primary); font-weight:600; }
         .exp-pill input { display:none; }
         .photo-thumb { width:80px; height:80px; object-fit:cover; border-radius:8px; }
         .recommend-row { display:flex; gap:12px; }
-        .rec-btn { flex:1; padding:12px; border:1.5px solid var(--border); border-radius:10px; background:none; font-family:inherit; font-size:.95rem; font-weight:600; cursor:pointer; transition:.2s; }
-        .rec-btn.yes.active { border-color:#1e8e3e; background:rgba(30,142,62,.07); color:#1e8e3e; }
-        .rec-btn.no.active { border-color:var(--destructive); background:rgba(220,53,69,.07); color:var(--destructive); }
-        .section-divider { border:none; border-top:2px dashed var(--border); margin:24px 0; }
-        .section-label { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted-foreground); margin-bottom:16px; }
+        .rec-btn { flex:1; padding:12px; border:1.5px solid #333; border-radius:10px; background:#141414; font-family:inherit; font-size:.95rem; font-weight:600; cursor:pointer; transition:.2s; color:#FFFFFF; }
+        .rec-btn.yes.active { border-color:#1e8e3e; background:rgba(30,142,62,.15); color:#1e8e3e; }
+        .rec-btn.no.active { border-color:var(--destructive); background:rgba(220,53,69,.15); color:var(--destructive); }
+        .section-divider { border:none; border-top:2px dashed #333; margin:24px 0; }
+        .section-label { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#A1A1AA; margin-bottom:16px; }
     </style>
 </head>
 <body>
@@ -88,15 +88,15 @@
 
             <!-- MODAL UNIFICADO -->
             <div id="reviewModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(6px)">
-                <div style="background:var(--card);border-radius:18px;width:94%;max-width:560px;max-height:94vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+                <div style="background:#1F1F1F;border-radius:18px;width:94%;max-width:560px;max-height:94vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
 
                     <!-- Header -->
-                    <div style="padding:24px 28px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card);z-index:2;border-radius:18px 18px 0 0">
+                    <div style="padding:24px 28px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #333;position:sticky;top:0;background:#1F1F1F;z-index:2;border-radius:18px 18px 0 0">
                         <div>
-                            <h2 style="font-family:'Poppins',sans-serif;font-size:1.2rem;margin:0">📝 Avaliar um Local</h2>
-                            <p style="margin:4px 0 0;font-size:.82rem;color:var(--muted-foreground)">Cadastre o local e deixe sua avaliação</p>
+                            <h2 style="font-family:'Poppins',sans-serif;font-size:1.2rem;margin:0;color:#FFFFFF">📝 Avaliar um Local</h2>
+                            <p style="margin:4px 0 0;font-size:.82rem;color:#A1A1AA">Cadastre o local e deixe sua avaliação</p>
                         </div>
-                        <button id="closeModal" style="background:none;border:none;font-size:1.7rem;cursor:pointer;color:var(--muted-foreground);line-height:1">&times;</button>
+                        <button id="closeModal" style="background:none;border:none;font-size:1.7rem;cursor:pointer;color:#A1A1AA;line-height:1">&times;</button>
                     </div>
 
                     <!-- FORMULÁRIO ÚNICO -->
