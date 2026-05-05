@@ -957,7 +957,7 @@ textarea.modal-input {
 
 .star-btn {
   font-size: 2rem;
-  color: hsl(0, 0%, 80%);
+  color: hsl(0, 0%, 0%);
   cursor: pointer;
   transition: color .15s, transform .1s;
   line-height: 1;
