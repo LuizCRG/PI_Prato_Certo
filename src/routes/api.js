@@ -26,7 +26,10 @@ async function verifyUser(req) {
 // ============================================================
 // UPLOAD LOCAL (fallback se Supabase Storage não estiver configurado)
 // ============================================================
-const uploadDir = path.join(__dirname, '../../public/uploads');
+const os = require('os');
+const isNetlify = process.env.NETLIFY === 'true' || process.env.AWS_LAMBDA_FUNCTION_VERSION;
+const uploadDir = isNetlify ? path.join(os.tmpdir(), 'uploads') : path.join(__dirname, '../../public/uploads');
+
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
 const storage = multer.diskStorage({

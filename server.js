@@ -24,9 +24,13 @@ app.use((req, res) => {
 });
 
 // Start Server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando na porta ${PORT}`);
-    console.log(`🌐 Acesse no navegador: http://localhost:${PORT}`);
-    console.log(`📦 Supabase URL: ${process.env.SUPABASE_URL ? '✅ Configurado' : '❌ Não configurado!'}`);
-});
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`🚀 Servidor rodando na porta ${PORT}`);
+        console.log(`🌐 Acesse no navegador: http://localhost:${PORT}`);
+        console.log(`📦 Supabase URL: ${process.env.SUPABASE_URL ? '✅ Configurado' : '❌ Não configurado!'}`);
+    });
+}
+
+module.exports = app;
