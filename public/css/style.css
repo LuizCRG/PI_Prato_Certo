@@ -1333,8 +1333,8 @@ label[for="suggestPhotos"]:hover {
   transition: all 0.2s;
 }
 
-.recommend-btn[data-active=" true\].yes { background: #e6f4ea; border-color: #1e8e3e; color: #1e8e3e; }
- .recommend-btn[data-active=\true\].no {
+.recommend-btn[data-active="true"].yes { background: #e6f4ea; border-color: #1e8e3e; color: #1e8e3e; }
+.recommend-btn[data-active="true"].no {
   background: #fce8e6;
   border-color: #c5221f;
   color: #c5221f;
