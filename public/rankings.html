@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rankings - Prato Honesto</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css?v=2">
 </head>
 <body>
     <header>
@@ -91,7 +91,7 @@
 
         // CSS inline temporário para o hover do ranking
         const style = document.createElement('style');
-        style.innerHTML = '.ranking-item:hover { background: rgba(230,126,34,0.08) !important; transform: translateX(8px); }';
+        style.innerHTML = '.ranking-item:hover { transform: translateY(-4px) !important; box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important; border-color: var(--primary) !important; }';
         document.head.appendChild(style);
     </script>
 </body>
