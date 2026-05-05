@@ -964,6 +964,10 @@ textarea.modal-input {
   user-select: none;
 }
 
+.reviewModal {
+  background-color: #141414;
+}
+
 .star-btn:hover,
 .star-btn.hovered,
 .star-btn.selected {
